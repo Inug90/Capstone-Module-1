@@ -1,7 +1,9 @@
 from tabulate import tabulate
 
+
 # Data pasien disimpan dalam list
 data_pasien = []
+
 
 # Fungsi CREATE untuk menambahkan pasien
 def tambah_pasien():
@@ -24,12 +26,27 @@ def tambah_pasien():
     data_pasien.append(pasien_baru)
     print("Pasien berhasil ditambahkan.")
 
+
 # Fungsi READ untuk menampilkan semua pasien
 def tampilkan_pasien():
     if data_pasien:
-        print(tabulate(data_pasien, headers="keys", tablefmt="grid"))
+        print(tabulate(data_pasien, headers="keys", tablefmt="pretty"))
     else:
         print("\nBelum ada data pasien. Silahkan masukan data pasien terlebih dahulu.")
+
+
+# Fungsi FILTER untuk menampilkan pasien berdasarkan kriteria
+def filter_pasien():
+    kriteria = input("Masukkan kriteria filter (Nama/Umur/Keluhan/No. HP): ").capitalize()
+    nilai = input("Masukkan nilai filter: ").lower()
+    
+    hasil_filter = [pasien for pasien in data_pasien if nilai in str(pasien.get(kriteria, '')).lower()]
+    
+    if hasil_filter:
+        print(tabulate(hasil_filter, headers="keys", tablefmt="pretty"))
+    else:
+        print("Tidak ada pasien yang sesuai dengan kriteria filter.")
+
 
 # Fungsi UPDATE untuk memperbarui data pasien
 def perbarui_pasien():
@@ -55,6 +72,7 @@ def perbarui_pasien():
         print("Pasien dengan ID tersebut tidak ditemukan.")
     except ValueError:
         print("ID pasien harus berupa angka.")
+        
 
 # Fungsi DELETE untuk menghapus pasien
 def hapus_pasien():
@@ -65,18 +83,6 @@ def hapus_pasien():
         print("Pasien berhasil dihapus.")
     except ValueError:
         print("ID pasien harus berupa angka.")
-
-# Fungsi FILTER untuk menampilkan pasien berdasarkan kriteria
-def filter_pasien():
-    kriteria = input("Masukkan kriteria filter (Nama/Umur/Keluhan/No. HP): ").capitalize()
-    nilai = input("Masukkan nilai filter: ").lower()
-    
-    hasil_filter = [pasien for pasien in data_pasien if nilai in str(pasien.get(kriteria, '')).lower()]
-    
-    if hasil_filter:
-        print(tabulate(hasil_filter, headers="keys", tablefmt="grid"))
-    else:
-        print("Tidak ada pasien yang sesuai dengan kriteria filter.")
 
 
 # Fungsi utama untuk menampilkan menu dan menangani input pengguna
